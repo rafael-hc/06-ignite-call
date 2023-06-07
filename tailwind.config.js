@@ -1,18 +1,45 @@
+import {
+  colors,
+  fontSizes,
+  fontWeights,
+  lineHeights,
+  radii,
+  space,
+} from '@rhcode/tokens'
+const plugin = require('tailwindcss/plugin')
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+  content: ['./src/components/**/*.tsx', './src/app/**/*.tsx'],
+  corePlugins: {
+    preflight: false,
+  },
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      fontFamily: {
+        sans: ['var(--font-roboto)'],
       },
+      colors,
+      fontSize: fontSizes,
+      fontWeight: fontWeights,
+      lineHeight: lineHeights,
+      borderRadius: radii,
+      spacing: space,
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addComponents }) {
+      addComponents({
+        '.Heading': {
+          color: '#E1E1E6',
+          lineHeight: '125%',
+          margin: 0,
+        },
+        '.Text': {
+          color: '#E1E1E6',
+          lineHeight: '160%',
+          margin: 0,
+        },
+      })
+    }),
+  ],
 }
