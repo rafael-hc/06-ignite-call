@@ -71,7 +71,7 @@ export default function Register({
           onSubmit={handleSubmit(handleRegister)}
           className="flex flex-col gap-4"
         >
-          <label className="relative flex flex-col gap-2">
+          <label className=" flex flex-col gap-2">
             <Text>Nome de usuário</Text>
             <TextInput
               type="text"
