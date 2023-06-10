@@ -1,14 +1,10 @@
-'use client'
-import { api } from '@/lib/axios'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowRight } from '@phosphor-icons/react'
 import { Box, Button, Heading, MultiStep, Text, TextInput } from '@rhcode/react'
-import { AxiosError } from 'axios'
-import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-const registerFormSchema = z.object({
+const timeIntervalsFormSchema = z.object({
   username: z
     .string()
     .min(3, { message: 'O username deve ter pelo menos 3 caracteres' })
@@ -21,40 +17,18 @@ const registerFormSchema = z.object({
     .min(3, { message: 'O username deve ter pelo menos 3 caracteres' }),
 })
 
-type RegisterFormData = z.infer<typeof registerFormSchema>
+type TimeIntervalsFormData = z.infer<typeof timeIntervalsFormSchema>
 
-export default function Register({
-  searchParams,
-}: {
-  searchParams: { username: string }
-}) {
-  const router = useRouter()
-
+export default function TimeIntervals() {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<RegisterFormData>({
-    resolver: zodResolver(registerFormSchema),
-    defaultValues: {
-      username: searchParams.username,
-    },
+  } = useForm<TimeIntervalsFormData>({
+    resolver: zodResolver(timeIntervalsFormSchema),
   })
 
-  async function handleRegister(data: RegisterFormData) {
-    try {
-      await api.post('/users', {
-        name: data.name,
-        username: data.username,
-      })
-
-      router.push('/register/connect-calendar')
-    } catch (error) {
-      if (error instanceof AxiosError && error.response?.data?.error) {
-        alert(error.response.data.error)
-      }
-    }
-  }
+  async function handleRegister(data: TimeIntervalsFormData) {}
 
   return (
     <>
@@ -64,7 +38,7 @@ export default function Register({
           Precisamos de algumas informações para criar seu perfil! Ah, você pode
           editar essas informações depois.
         </Text>
-        <MultiStep size={4} currentStep={1} />
+        <MultiStep size={4} currentStep={3} />
       </div>
       <Box className="mt-6">
         <form

@@ -21,7 +21,7 @@ export default function ConnectCalendar({
   }
 
   return (
-    <main className="mx-auto mb-4 mt-20 max-w-xl px-4 py-0">
+    <>
       <div className="px-4 py-0">
         <Heading className="leading-base">Conecte sua agenda!</Heading>
         <Text className="mb-6 text-gray-200">
@@ -67,6 +67,6 @@ export default function ConnectCalendar({
           </Button>
         </form>
       </Box>
-    </main>
+    </>
   )
 }
