@@ -1,4 +1,5 @@
 'use client'
+import { api } from '@/lib/axios'
 import { convertTimeStringToMinutes } from '@/utils/convert-time-string-to-minutes'
 import { getWeekDays } from '@/utils/get-week-days'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -35,7 +36,7 @@ const timeIntervalsFormSchema = z.object({
     .transform((intervals) => {
       return intervals.map((interval) => {
         return {
-          weedDay: interval.weekDay,
+          weekDay: interval.weekDay,
           startTimeInMinutes: convertTimeStringToMinutes(interval.startTime),
           endTimeInMinutes: convertTimeStringToMinutes(interval.endTime),
         }
@@ -89,7 +90,7 @@ export default function TimeIntervals() {
   })
 
   async function handleSetTimeIntervals(data: TimeIntervalsFormDataOutput) {
-    console.log(data)
+    await api.post('/users/time-intervals', data)
   }
 
   return (
