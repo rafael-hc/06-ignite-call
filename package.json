@@ -12,7 +12,7 @@
     "@hookform/resolvers": "^3.1.0",
     "@phosphor-icons/react": "^2.0.9",
     "@prisma/client": "^4.15.0",
-    "@rhcode/react": "2.2.1",
+    "@rhcode/react": "2.4.0",
     "@rhcode/tokens": "^1.2.0",
     "@rocketseat/eslint-config": "^1.2.0",
     "@types/node": "20.2.5",

@@ -1,77 +1,148 @@
+'use client'
+import { convertTimeStringToMinutes } from '@/utils/convert-time-string-to-minutes'
+import { getWeekDays } from '@/utils/get-week-days'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowRight } from '@phosphor-icons/react'
-import { Box, Button, Heading, MultiStep, Text, TextInput } from '@rhcode/react'
-import { useForm } from 'react-hook-form'
+import {
+  Box,
+  Button,
+  Checkbox,
+  Heading,
+  MultiStep,
+  Text,
+  TextInput,
+} from '@rhcode/react'
+import { useFieldArray, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 const timeIntervalsFormSchema = z.object({
-  username: z
-    .string()
-    .min(3, { message: 'O username deve ter pelo menos 3 caracteres' })
-    .regex(/^([a-z\\-]+)$/i, {
-      message: 'O username pode ter apenas letras e hifens',
+  intervals: z
+    .array(
+      z.object({
+        weekDay: z.number().min(0).max(6),
+        enabled: z.boolean(),
+        startTime: z.string(),
+        endTime: z.string(),
+      }),
+    )
+    .length(7)
+    .transform((intervals) =>
+      intervals.filter((interval) => interval.enabled === true),
+    )
+    .refine((intervals) => intervals.length > 0, {
+      message: 'Você precisa selecionar pelo menos um dia da semana.',
     })
-    .transform((username) => username.toLowerCase()),
-  name: z
-    .string()
-    .min(3, { message: 'O username deve ter pelo menos 3 caracteres' }),
+    .transform((intervals) => {
+      return intervals.map((interval) => {
+        return {
+          weedDay: interval.weekDay,
+          startTimeInMinutes: convertTimeStringToMinutes(interval.startTime),
+          endTimeInMinutes: convertTimeStringToMinutes(interval.endTime),
+        }
+      })
+    })
+    .refine(
+      (intervals) =>
+        intervals.every(
+          (interval) =>
+            interval.endTimeInMinutes - interval.startTimeInMinutes >= 60,
+        ),
+      {
+        message:
+          'O horário de término deve ser pelo menos 1h distante do início.',
+      },
+    ),
 })
 
-type TimeIntervalsFormData = z.infer<typeof timeIntervalsFormSchema>
+type TimeIntervalsFormDataInput = z.input<typeof timeIntervalsFormSchema>
+type TimeIntervalsFormDataOutput = z.output<typeof timeIntervalsFormSchema>
 
 export default function TimeIntervals() {
   const {
     register,
     handleSubmit,
+    control,
+    watch,
     formState: { errors, isSubmitting },
-  } = useForm<TimeIntervalsFormData>({
+  } = useForm<TimeIntervalsFormDataInput, any, TimeIntervalsFormDataOutput>({
     resolver: zodResolver(timeIntervalsFormSchema),
+    defaultValues: {
+      intervals: [
+        { weekDay: 0, enabled: false, startTime: '08:00', endTime: '18:00' },
+        { weekDay: 1, enabled: true, startTime: '08:00', endTime: '18:00' },
+        { weekDay: 2, enabled: true, startTime: '08:00', endTime: '18:00' },
+        { weekDay: 3, enabled: true, startTime: '08:00', endTime: '18:00' },
+        { weekDay: 4, enabled: true, startTime: '08:00', endTime: '18:00' },
+        { weekDay: 5, enabled: false, startTime: '08:00', endTime: '18:00' },
+        { weekDay: 6, enabled: false, startTime: '08:00', endTime: '18:00' },
+      ],
+    },
   })
 
-  async function handleRegister(data: TimeIntervalsFormData) {}
+  const weekDays = getWeekDays()
+
+  const intervals = watch('intervals')
+
+  const { fields } = useFieldArray({
+    control,
+    name: 'intervals',
+  })
+
+  async function handleSetTimeIntervals(data: TimeIntervalsFormDataOutput) {
+    console.log(data)
+  }
 
   return (
     <>
       <div className="px-4 py-0">
-        <Heading className="leading-base">Bem-vindo ao Ignite Call!</Heading>
+        <Heading className="leading-base">Quase lá</Heading>
         <Text className="mb-6 text-gray-200">
-          Precisamos de algumas informações para criar seu perfil! Ah, você pode
-          editar essas informações depois.
+          Defina o intervalo de horários que você está disponível em cada dia da
+          semana.
         </Text>
         <MultiStep size={4} currentStep={3} />
       </div>
-      <Box className="mt-6">
+      <Box className="mt-6 ">
         <form
-          onSubmit={handleSubmit(handleRegister)}
+          onSubmit={handleSubmit(handleSetTimeIntervals)}
           className="flex flex-col gap-4"
         >
-          <label className=" flex flex-col gap-2">
-            <Text>Nome de usuário</Text>
-            <TextInput
-              type="text"
-              prefix="cal.com/"
-              placeholder="seu-usuario"
-              {...register('username')}
-            />
-            {errors.username && (
-              <Text className="absolute right-2 top-12 text-right text-xs text-red-400">
-                {errors.username.message}
-              </Text>
-            )}
-          </label>
-          <label className="relative flex flex-col gap-2">
-            <Text>Nome completo</Text>
-            <TextInput
-              type="text"
-              placeholder="Seu nome"
-              {...register('name')}
-            />
-            {errors.name && (
-              <Text className="absolute right-2 top-12 text-right text-xs text-red-400">
-                {errors.name.message}
-              </Text>
-            )}
-          </label>
+          <div className="rounded-md border border-gray-600">
+            {fields.map((field, index) => (
+              <div
+                key={field.id}
+                className="flex items-center justify-between border-gray-600 px-4 py-3 [&_+_&]:border-t"
+              >
+                <div className="flex items-center gap-3">
+                  <Checkbox {...register(`intervals.${index}.enabled`)} />
+                  <Text>{weekDays[field.weekDay]}</Text>
+                </div>
+                <div className="flex items-center gap-3">
+                  <TextInput
+                    sizes="sm"
+                    type="time"
+                    step={60}
+                    className="tp: [&_input]:leading-normal"
+                    disabled={intervals[index].enabled === false}
+                    {...register(`intervals.${index}.startTime`)}
+                  />
+                  <TextInput
+                    sizes="sm"
+                    type="time"
+                    step={60}
+                    className="[&_input]:leading-normal"
+                    disabled={intervals[index].enabled === false}
+                    {...register(`intervals.${index}.endTime`)}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+          {errors.intervals && (
+            <Text size="sm" className="text-right text-red-500">
+              {errors.intervals.message}
+            </Text>
+          )}
           <Button
             size="sm"
             type="submit"
