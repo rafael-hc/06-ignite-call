@@ -15,8 +15,8 @@ dependencies:
     specifier: ^4.15.0
     version: 4.15.0(prisma@4.15.0)
   '@rhcode/react':
-    specifier: 2.4.0
-    version: 2.4.0
+    specifier: 2.5.0
+    version: 2.5.0
   '@rhcode/tokens':
     specifier: ^1.2.0
     version: 1.2.0
@@ -552,8 +552,8 @@ packages:
     resolution: {integrity: sha512-FTaOCGs0LL0OW68juZlGxFtYviZa4xdQj/rQEdat2txw0s3Vu/saAPKjNVXfIgUsGXmQ72HPgNr6935/P8FNAA==}
     requiresBuild: true
 
-  /@rhcode/react@2.4.0:
-    resolution: {integrity: sha512-dtT7rDVhafEXsRO425JcrT1OsTyTM6wPP8VBxY9dsWMf6Kbz2mFPCOCc6sucngyXB2Uzc7txeExl3l/T2mRWbA==}
+  /@rhcode/react@2.5.0:
+    resolution: {integrity: sha512-XnmGqHhO+rbq8PSmSaYTmL4tG/ROWN7dO7Hz1ypTR+ebb8LZbXoDX/P4MsPqanHGxlJRc1kLRltnzGWM3FV59w==}
     dependencies:
       classnames: 2.3.2
     dev: false

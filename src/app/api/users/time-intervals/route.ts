@@ -16,12 +16,10 @@ const timeIntervalsBodySchema = z.object({
 })
 
 export async function POST(request: Request) {
-  const req = await request.json()
   const session = await getServerSession(authOptions)
+  if (!session) return NextResponse.json({}, { status: 401 })
 
-  if (!session)
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-
+  const req = await request.json()
   const _body = timeIntervalsBodySchema.safeParse(req)
 
   if (_body.success === false) {

@@ -13,6 +13,7 @@ import {
   Text,
   TextInput,
 } from '@rhcode/react'
+import { useRouter } from 'next/navigation'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -89,8 +90,12 @@ export default function TimeIntervals() {
     name: 'intervals',
   })
 
+  const router = useRouter()
+
   async function handleSetTimeIntervals(data: TimeIntervalsFormDataOutput) {
     await api.post('/users/time-intervals', data)
+
+    router.push('/register/update-profile')
   }
 
   return (

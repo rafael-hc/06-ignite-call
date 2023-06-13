@@ -2,6 +2,7 @@
 import { ArrowRight, Check } from '@phosphor-icons/react'
 import { Box, Button, Heading, MultiStep, Text } from '@rhcode/react'
 import { signIn, useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import { MouseEvent } from 'react'
 
 export default function ConnectCalendar({
@@ -15,9 +16,15 @@ export default function ConnectCalendar({
 
   const hasAuthError = !!searchParams.error
 
+  const router = useRouter()
+
   async function handleConnectCalendar(event: MouseEvent<HTMLButtonElement>) {
     event.preventDefault()
     await signIn('google')
+  }
+  function handleNavigateToNextStep(event: MouseEvent<HTMLButtonElement>) {
+    event.preventDefault()
+    router.push('/register/time-intervals')
   }
 
   return (
@@ -61,6 +68,7 @@ export default function ConnectCalendar({
             type="submit"
             variant="primary"
             disabled={!isSignedIn}
+            onClick={handleNavigateToNextStep}
           >
             Próximo passo
             <ArrowRight />
