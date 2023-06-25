@@ -1,11 +1,15 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "@rhcode/react/dist";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
 
 body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
+
 
 input[type=time]::-webkit-calendar-picker-indicator {
   filter: invert(100%) brightness(40%);

@@ -1,6 +1,6 @@
 import './reset.css'
-import '@rhcode/react/dist/index.css'
 import './globals.css'
+import '@/lib/dayjs'
 import { ReactNode } from 'react'
 import { Roboto_Flex as Roboto } from 'next/font/google'
 import { NextAuthProvider } from './providers'

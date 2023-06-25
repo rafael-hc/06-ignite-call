@@ -28,8 +28,6 @@ export function ClaimUsernameForm() {
   })
 
   async function handleClaimUsername(data: ClaimUsernameFormData) {
-    console.log(data)
-
     await route.push(`/register?username=${data.username}`)
   }
 
