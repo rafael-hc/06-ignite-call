@@ -1,6 +1,6 @@
 import './reset.css'
-import '@rhcode/react/dist/index.css'
 import './globals.css'
+import '@/lib/dayjs'
 import { ReactNode } from 'react'
 import { Roboto_Flex as Roboto } from 'next/font/google'
 import { NextAuthProvider } from './providers'
@@ -14,7 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <body
         className={`${roboto.variable} bg-gray-900 font-sans text-gray-100`}
       >

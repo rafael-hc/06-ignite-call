@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
+import { cookies } from 'next/headers'
 import { prisma } from '@/lib/prisma'
 
 export async function POST(request: Request) {
@@ -45,14 +46,17 @@ export async function POST(request: Request) {
     },
   })
 
+  const cookie = cookies()
+  cookie.set('@ignitecall:userId', user.id, {
+    path: '/',
+    maxAge: 60 * 60 * 24 * 7, // 7days
+  })
+
   return NextResponse.json(user, {
     status: 201,
-    headers: {
-      // eslint-disable-next-line prettier/prettier
-      'Set-Cookie': `@ignitecall:userId=${user.id}; Path=/; MAx-Age=${60 * 60 * 24 * 7}`, // Max-Age = 7days
-    },
   })
 }
+
 export async function GET(request: Request) {
   const user = await prisma.user.findMany()
 

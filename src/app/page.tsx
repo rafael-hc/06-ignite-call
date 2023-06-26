@@ -1,14 +1,15 @@
 import previewImage from '../assets/preview.png'
 import Image from 'next/image'
 import { Hero } from '@/components/Hero'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Descomplique sua agenda | Ignite Call',
+  description:
+    'Conecte seu calendário e permita que as pessoas marquem agendamentos no seu tempo livre.',
+}
 
 export default function Home() {
-  // function handleSubmit(event: FormEvent<HTMLFormElement>) {
-  //   event.preventDefault()
-  //   const formData = new FormData(event.currentTarget)
-  //   console.log(formData)
-  // }
-
   return (
     <main className="ml-auto flex h-screen max-w-[calc(100vw-(100vw-1160px)/2)] items-center gap-20">
       <Hero />

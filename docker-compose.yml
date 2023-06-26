@@ -1,0 +1,11 @@
+
+# docker run --name -e = -p 3306:3306 mysql:latest
+version: '3'
+services:
+  mysql:
+    container_name: mysql-ignite-call
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=docker
