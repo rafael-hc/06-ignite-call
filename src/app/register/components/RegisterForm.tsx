@@ -1,3 +1,4 @@
+'use client'
 import { api } from '@/lib/axios'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowRight } from '@phosphor-icons/react'
