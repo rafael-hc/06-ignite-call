@@ -2,6 +2,21 @@ import { prisma } from '@/lib/prisma'
 import { Header } from './components/Header'
 import { notFound } from 'next/navigation'
 import { ScheduleForm } from './components/ScheduleForm'
+import { Metadata, ResolvingMetadata } from 'next'
+
+interface ScheduleProps {
+  params: { username: string }
+}
+export async function generateMetadata(
+  { params }: ScheduleProps,
+  parent?: ResolvingMetadata,
+): Promise<Metadata> {
+  const username = params.username
+
+  return {
+    title: `Agendar com ${username} | Ignite Call`,
+  }
+}
 
 export async function generateStaticParams() {
   const user = await prisma.user.findUnique({
@@ -18,11 +33,7 @@ export async function generateStaticParams() {
 
 export const revalidate = 60 * 60 * 24 // 1 day
 
-export default async function Schedule({
-  params,
-}: {
-  params: { username: string }
-}) {
+export default async function Schedule({ params }: ScheduleProps) {
   const user = await prisma.user.findUniqueOrThrow({
     where: {
       username: params.username,

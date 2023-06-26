@@ -1,6 +1,13 @@
 import previewImage from '../assets/preview.png'
 import Image from 'next/image'
 import { Hero } from '@/components/Hero'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Descomplique sua agenda | Ignite Call',
+  description:
+    'Conecte seu calendário e permita que as pessoas marquem agendamentos no seu tempo livre.',
+}
 
 export default function Home() {
   return (
