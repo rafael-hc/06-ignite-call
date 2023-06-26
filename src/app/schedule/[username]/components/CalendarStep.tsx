@@ -1,3 +1,4 @@
+'use client'
 import { Calendar } from '@/components/Calendar'
 import classnames from 'classnames'
 import { Box, Text } from '@rhcode/react'

@@ -1,3 +1,4 @@
+'use client'
 import { ArrowRight, Check } from '@phosphor-icons/react'
 import { Box, Button, Heading, MultiStep, Text } from '@rhcode/react'
 import { signIn, useSession } from 'next-auth/react'

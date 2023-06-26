@@ -1,3 +1,4 @@
+'use client'
 import { FormError } from '@/components/FormError'
 import { api } from '@/lib/axios'
 import { zodResolver } from '@hookform/resolvers/zod'
