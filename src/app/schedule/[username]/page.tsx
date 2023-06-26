@@ -1,16 +1,14 @@
 import { prisma } from '@/lib/prisma'
 import { Header } from './components/Header'
-import { notFound } from 'next/navigation'
 import { ScheduleForm } from './components/ScheduleForm'
-import { Metadata, ResolvingMetadata } from 'next'
+import { Metadata } from 'next'
 
 interface ScheduleProps {
   params: { username: string }
 }
-export async function generateMetadata(
-  { params }: ScheduleProps,
-  parent?: ResolvingMetadata,
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: ScheduleProps): Promise<Metadata> {
   const username = params.username
 
   return {
@@ -19,15 +17,6 @@ export async function generateMetadata(
 }
 
 export async function generateStaticParams() {
-  const user = await prisma.user.findUnique({
-    where: {
-      username: 'rafael-hc',
-    },
-  })
-
-  if (!user) {
-    return notFound()
-  }
   return []
 }
 
