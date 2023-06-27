@@ -120,7 +120,10 @@ export function TimeIntervalsForm() {
                 className="flex items-center justify-between border-gray-600 px-4 py-3 [&_+_&]:border-t"
               >
                 <div className="flex items-center gap-3">
-                  <Checkbox {...register(`intervals.${index}.enabled`)} />
+                  <Checkbox
+                    {...register(`intervals.${index}.enabled`)}
+                    className="checked:bg-green-500"
+                  />
                   <Text>{weekDays[field.weekDay]}</Text>
                 </div>
                 <div className="flex items-center gap-3">
